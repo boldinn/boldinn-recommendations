@@ -1,5 +1,3 @@
-# pylint: disable=undefined-variable
-
 import json
 import os
 from flask import Flask, request, jsonify
@@ -11,11 +9,8 @@ app = Flask(__name__)
 @app.route('/recomendar_ejercicios', methods=['POST'])
 def recomendar_ejercicios_api():
     data = request.get_json()
-    # data =json.loads(data)
     puntajes=data['puntajes']
     ejercicios=data['ejercicios_resueltos']
-    print('json_puntajes:',puntajes)
-    print('Ejercicios resueltos:', ejercicios)
     try:
         ejercicios_recomendados = recomendar_ejercicios(puntajes,ejercicios)
         return jsonify({'recommendations': ejercicios_recomendados})
@@ -25,8 +20,7 @@ def recomendar_ejercicios_api():
 @app.route('/actualizar_datos', methods=['POST'])
 def actualizar_datos_api():
     data = request.get_json()
-    # data = json.loads(data)
-    utilidades=data['utilidades']
+    utilidades= data['utilidades']
     puntajes_ejercicios= data['puntajes_ejercicios']
     puntajes = data['puntajes']
     print(data)

@@ -23,7 +23,7 @@ print("Ejercicios resueltos:", ej)
 
 content = {"puntajes": P, "ejercicios_resueltos": ej}
 json = json.dumps(content)
-# print(json)
+print(json)
 # Realiza una solicitud POST a la ruta /recomendar_ejercicios
 url = "http://localhost:5000/recomendar_ejercicios"
 response = requests.post(url, json=json)
