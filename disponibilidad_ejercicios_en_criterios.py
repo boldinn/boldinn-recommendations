@@ -1,6 +1,4 @@
-import pandas as pd
-
-ejercicios_df = pd.read_csv('ejercicios.csv')
+from data_handling import ejercicios_df
 
 def ejercicios_disponibles(criterio, nivel, ejercicios_agotados):
     """

@@ -1,10 +1,7 @@
 
 import pandas as pd
 import numpy as np
-
-ejercicios_df = pd.read_csv('ejercicios.csv')
-
-criterios=ejercicios_df['criterion_code'].unique()
+from data_handling import ejercicios_df, codigos_criterios as criterios
 
 def actualizar_datos_entrenamiento(utilidades, puntajes_ejercicios, puntajes):
     
@@ -31,8 +28,6 @@ def actualizar_datos_entrenamiento(utilidades, puntajes_ejercicios, puntajes):
     # Preparar la nueva fila con los puntajes finales
     nueva_fila = {f"Puntajes_Criterio_{i + 1}": p/100 for i, p in enumerate(puntajes.values())}
 
-
-
     # Obtener los códigos de los ejercicios de la ruta
     codigos_ejercicios = list(puntajes_ejercicios.keys())
 
@@ -50,7 +45,7 @@ def actualizar_datos_entrenamiento(utilidades, puntajes_ejercicios, puntajes):
     nueva_fila["score"] = score
 
     # Agregar la nueva fila a 'datos_entrenamiento.csv'
-    print(nueva_fila)
+    #print(nueva_fila)
 
     fila_csv = ','.join(str(value) for value in nueva_fila.values()) + '\n'
 
