@@ -13,8 +13,8 @@ app = Flask(__name__)
 # la primera recomendación a cada grupo se hace con la siguiente función.
 @app.route("/recomendacion_inicial", methods=["POST"])
 def recomendacion_inicial_api():
-    request_data = request.get_json()
-    data = json.loads(request_data)
+    data = request.get_json()
+    # Dict = json.loads(data)
     puntajes = data["puntajes"]
     try:
         ejercicios_recomendados = json.dumps(recomendacion_inicial(puntajes))
@@ -27,12 +27,12 @@ def recomendacion_inicial_api():
 @app.route("/actualizar_datos", methods=["POST"])
 def actualizar_datos_api():
     data = request.get_json()
-    Dict = json.loads(data)
-    utilidades = Dict["utilidades"]
-    puntajes_ejercicios = Dict["puntajes_ejercicios"]
-    puntajes = Dict["puntajes"]
+    # Dict = json.loads(data)
+    utilidades = data["utilidades"]
+    puntajes_ejercicios = data["puntajes_ejercicios"]
+    puntajes = data["puntajes"]
 
-    print(Dict)
+    print(data)
     try:
         actualizar_datos_entrenamiento(utilidades, puntajes_ejercicios, puntajes)
         return jsonify({"success": True})
@@ -44,9 +44,9 @@ def actualizar_datos_api():
 @app.route("/recomendar_ejercicios", methods=["POST"])
 def recomendar_ejercicios_api():
     data = request.get_json()
-    Dict = json.loads(data)
-    puntajes = Dict["puntajes"]
-    ejercicios = Dict["ejercicios_resueltos"]
+    # Dict = json.loads(data)
+    puntajes = data["puntajes"]
+    ejercicios = data["ejercicios_resueltos"]
     try:
         ejercicios_recomendados = json.dumps(
             recomendar_ejercicios(puntajes, ejercicios)
