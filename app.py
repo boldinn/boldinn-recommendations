@@ -17,7 +17,7 @@ def recomendacion_inicial_api():
     # Dict = json.loads(data)
     puntajes = data["puntajes"]
     try:
-        ejercicios_recomendados = json.dumps(recomendacion_inicial(puntajes))
+        ejercicios_recomendados = recomendacion_inicial(puntajes)
         return jsonify({"recommendations": ejercicios_recomendados})
     except Exception as e:
         return jsonify({"error": str(e)})
@@ -48,9 +48,7 @@ def recomendar_ejercicios_api():
     puntajes = data["puntajes"]
     ejercicios = data["ejercicios_resueltos"]
     try:
-        ejercicios_recomendados = json.dumps(
-            recomendar_ejercicios(puntajes, ejercicios)
-        )
+        ejercicios_recomendados = recomendar_ejercicios(puntajes, ejercicios)
         return jsonify({"recommendations": ejercicios_recomendados})
     except Exception as e:
         return jsonify({"error": str(e)})
