@@ -13,9 +13,9 @@ app = Flask(__name__)
 # la primera recomendación a cada grupo se hace con la siguiente función.
 @app.route("/recomendacion_inicial", methods=["POST"])
 def recomendacion_inicial_api():
-    data = request.get_json()
-    Dict = json.loads(data)
-    puntajes = Dict["puntajes"]
+    request_data = request.get_json()
+    data = json.loads(request_data)
+    puntajes = data["puntajes"]
     try:
         ejercicios_recomendados = json.dumps(recomendacion_inicial(puntajes))
         return jsonify({"recommendations": ejercicios_recomendados})
