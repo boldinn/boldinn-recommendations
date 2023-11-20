@@ -1,16 +1,8 @@
 from procesamiento_puntajes import obtener_4_criterios
 from math import floor
-import json
-import pandas as pd
 import random
-import numpy as np
 from disponibilidad_ejercicios_en_criterios import ejercicios_disponibles
-
-# Cargar información de ejercicios
-ejercicios_df = pd.read_csv("ejercicios.csv")
-
-# Códigos de los criterios (no están del 1 al 20)
-codigos_criterios = ejercicios_df["criterion_code"].unique()
+from data_handling import ejercicios_df, codigos_criterios
 
 
 # Función para obtener los ejercicios recomendados
@@ -23,7 +15,7 @@ def recomendar_ejercicios(puntajes, ejercicios):
     - dicionario de parejas de la forma 'criterio':'puntaje'.
     - lista de ejercicios resueltos por los grupos.
 
-    Output: json de 4 parejas de la forma 'criterio':'ejercicio_recomendado'.
+    Output: diccionario 4 parejas de la forma 'criterio':'ejercicio_recomendado'.
     """
 
     # criterios con ejercicios disponibles
@@ -49,7 +41,7 @@ def recomendar_ejercicios(puntajes, ejercicios):
 
         # Seleccionar un ejercicio aleatorio con el nivel de complejidad elegido
         # para el criterio actual
-        code = int(codigos_criterios[criterio - 1])
+        code = int(codigos_criterios[criterio])
         ejercicios_filtrados = ejercicios_df[
             (ejercicios_df["level"] == nivel_elegido)
             & (ejercicios_df["criterion_code"] == code)
