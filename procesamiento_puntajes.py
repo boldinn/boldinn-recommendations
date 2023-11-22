@@ -9,14 +9,16 @@ def cuadrupla(vector_binario):
   return cuadrupla
 
 
-def obtener_4_criterios(criterios_puntajes,lista):
+def obtener_4_criterios(criterios_puntajes,lista,n_rec):
 
   """ Obtiene 4 criterios apropiados (modelo de regresión y maximización)
   del diccionario con items criterio:puntaje.
   Inputs: 
-  -diccionario de items criterio (0-19):puntaje
-  -lista de criterios con ejercicios disponibles
-  Output: lista apropiada de cuatro criterios.
+  - diccionario de items 'criterio' (0-19):'puntaje'.
+  - lista de criterios con ejercicios disponibles.
+  - número de recomendaciones que se quieren (1,2 o 3).
+
+  Output: lista de listas apropiada de cuatro criterios, de tamaño n_rec.
   """
   data = pd.read_csv('datos_entrenamiento.csv')
   print(len(data))
@@ -63,8 +65,11 @@ def obtener_4_criterios(criterios_puntajes,lista):
   posible_df = pd.DataFrame(posible)
   #print(posible_df.shape)
   predicted_scores = model.predict(posible_df)
-  i_max=np.argmax(predicted_scores)
-  vector_binario=posible_df.iloc[i_max].to_numpy(dtype=int)[20:]
-  criteria=cuadrupla(vector_binario)
-
-  return criteria
+  #i_max=np.argmax(predicted_scores)
+  top_n_rec=np.argsort(predicted_scores)[:len(predicted_scores)-n_rec-1:-1]
+  print('top_n_rec',top_n_rec)
+  #vector_binario=posible_df.iloc[i_max].to_numpy(dtype=int)[20:]
+  vectores_binarios=[posible_df.iloc[i].to_numpy(dtype=int)[20:] for i in top_n_rec]
+  #criteria=[cuadrupla(vector_binario)]
+  criteriaxn=[cuadrupla(vector_binario) for vector_binario in vectores_binarios]
+  return criteriaxn

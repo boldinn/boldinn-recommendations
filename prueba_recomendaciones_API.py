@@ -1,5 +1,3 @@
-
-
 import json,random
 import requests
 from data_handling import  codigos_criterios
@@ -12,11 +10,14 @@ P={int(c): 100*random.random() for c in codigos_criterios}
 # ejercicios resueltos
 ej=['E1','E3','E5','E7']
 
+# número de recomendaciones
+n_rec=3
+
 # Prueba
 print('Puntajes:',P)
 print('Ejercicios resueltos:', ej)
 
-content={'puntajes':P, 'ejercicios_resueltos':ej}
+content={'puntajes':P, 'ejercicios_resueltos':ej, 'n_rec':n_rec}
 json=json.dumps(content)
 #print(json)
 # Realiza una solicitud POST a la ruta /recomendar_ejercicios
