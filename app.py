@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.route("/recomendacion_inicial", methods=["POST"])
 def recomendacion_inicial_api():
     data = request.get_json()
-    # Dict = json.loads(data)
+    # Dict =json.loads(data)
     puntajes = data["puntajes"]
     try:
         ejercicios_recomendados = recomendacion_inicial(puntajes)
@@ -31,8 +31,8 @@ def actualizar_datos_api():
     utilidades = data["utilidades"]
     puntajes_ejercicios = data["puntajes_ejercicios"]
     puntajes = data["puntajes"]
-
     print(data)
+
     try:
         actualizar_datos_entrenamiento(utilidades, puntajes_ejercicios, puntajes)
         return jsonify({"success": True})
@@ -44,11 +44,12 @@ def actualizar_datos_api():
 @app.route("/recomendar_ejercicios", methods=["POST"])
 def recomendar_ejercicios_api():
     data = request.get_json()
-    # Dict = json.loads(data)
+    # Dict =json.loads(data)
     puntajes = data["puntajes"]
     ejercicios = data["ejercicios_resueltos"]
+    n_rec = data["n_rec"]
     try:
-        ejercicios_recomendados = recomendar_ejercicios(puntajes, ejercicios)
+        ejercicios_recomendados = recomendar_ejercicios(puntajes, ejercicios, n_rec)
         return jsonify({"recommendations": ejercicios_recomendados})
     except Exception as e:
         return jsonify({"error": str(e)})

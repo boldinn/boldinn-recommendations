@@ -1,7 +1,6 @@
 from alimentar_modelo import actualizar_datos_entrenamiento
-import pandas as pd
 import random
-from data_handling import ejercicios_df, codigos_criterios
+from data_handling import codigos_criterios
 
 utilidades = [0.2, 0.3, 0.5, 0.4]
 puntajes_ejercicios = {'E10': 0.2, 'E20': 0.4, 'E30': 0.4, 'E40':0.6}

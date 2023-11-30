@@ -1,8 +1,6 @@
-
-import pandas as pd
 from recomendaciones import recomendar_ejercicios
 import random
-from data_handling import ejercicios_df, codigos_criterios
+from data_handling import codigos_criterios
 
 # Generar un caso
 
@@ -16,7 +14,7 @@ ej=['E1','E3','E5','E7']
 print('Puntajes:',P)
 print('Ejercicios resueltos:', ej)
 
-R=recomendar_ejercicios(P,ej)
+R=recomendar_ejercicios(P,ej,3)
 print('\n\n')
 template=f"""***RUTA EJERCICIOS RECOMENDADOS***:
 {R}

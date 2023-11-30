@@ -34,4 +34,6 @@ Para instalar y ejecutar este proyecto, primero clone el repositorio y luego ins
 ```
 pip install -r requirements.txt
 ```
+## Descripción general del algoritmo
 
+https://docs.google.com/document/d/1u4v_0eCuR7DA5Lrzi63kip1RFjf3E6jzB0K1Cqr-kVA
