@@ -2,7 +2,8 @@ import pandas as pd
 import requests
 
 # URL de la API de los datos de organizaciones
-url = "https://boldinn-api.herokuapp.com/api/v1/recommendations/org_data"
+# url = "https://boldinn-api.herokuapp.com/api/v1/recommendations/org_data"
+url = "http://localhost:3000/api/v1/recommendations/org_data"
 
 
 def procesar_datos(org_id, position, knowledge, area):
