@@ -6,6 +6,8 @@ from flask import Flask, request, jsonify
 from recomendaciones_inicial import recomendar_ejercicios as recomendacion_inicial
 from recomendaciones import recomendar_ejercicios
 from alimentar_modelo import actualizar_datos_entrenamiento
+from data_handling import procesar_datos
+from team_recommendation_algorithm import get_best_teams_for_challenge
 
 app = Flask(__name__)
 
@@ -51,6 +53,40 @@ def recomendar_ejercicios_api():
     try:
         ejercicios_recomendados = recomendar_ejercicios(puntajes, ejercicios, n_rec)
         return jsonify({"recommendations": ejercicios_recomendados})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+@app.route("/recomendar_grupos", methods=["POST"])
+def recomendar_grupos_api():
+    data = request.get_json()
+    # Dict = json.loads(data)
+    desafio = data["desafio"]
+    tamanio_grupo = data["tamanio_grupo"]
+    include = data["include"]
+    discard = data["discard"]
+    history = data["history"]
+    id_org = data["id_org"]
+    position = data["position"]
+    knowledge = data["knowledge"]
+    area = data["area"]
+    top_n = 8
+    n_rec = data["n_rec"]  # número máximo de recomendaciones
+    data_df, desafios_df = procesar_datos(id_org, position, knowledge, area)
+    try:
+        grupos_recomendados = json.dumps(
+            get_best_teams_for_challenge(
+                desafio,
+                data_df,
+                desafios_df,
+                tamanio_grupo,
+                top_n,
+                include,
+                discard,
+                history,
+                n_rec,
+            )
+        )
+        return jsonify({"recomendaciones": grupos_recomendados})
     except Exception as e:
         return jsonify({"error": str(e)})
 
