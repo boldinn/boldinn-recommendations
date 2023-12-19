@@ -1,21 +1,24 @@
-import json 
+import json
 import random
 import requests
-from data_handling import codigos_criterios
+from algoritmos.data_handling import codigos_criterios
 
 utilidades = [0.2, 0.3, 0.5, 0.4]
-puntajes_ejercicios = {'E10': 0.2, 'E20': 0.4, 'E30': 0.4, 'E40':0.6}
+puntajes_ejercicios = {"E10": 0.2, "E20": 0.4, "E30": 0.4, "E40": 0.6}
 
 # 20 puntajes
-P={int(c): 100*random.random() for c in codigos_criterios}
+P = {int(c): 100 * random.random() for c in codigos_criterios}
 
-content={'utilidades':utilidades, 'puntajes_ejercicios':puntajes_ejercicios , 'puntajes':P}
-json=json.dumps(content)
+content = {
+    "utilidades": utilidades,
+    "puntajes_ejercicios": puntajes_ejercicios,
+    "puntajes": P,
+}
+json = json.dumps(content)
 
-#print(json)
 # Realiza una solicitud POST a la ruta /recomendar_ejercicios
 url = "http://localhost:5000/actualizar_datos"
-response = requests.post(url, json=json)
+response = requests.post(url, json=json, timeout=60)
 
 # Mostrar respuesta
 

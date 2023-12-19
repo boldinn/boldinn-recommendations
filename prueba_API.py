@@ -3,7 +3,7 @@ import requests
 
 content = {
     "desafio": 1,
-    "tamanio_grupo": 8,
+    "tamaño_grupo": 8,
     "id_org": 12,
     "include": [150, 100],
     "discard": [206, 207],
@@ -16,7 +16,7 @@ content = {
 JSON = json.dumps(content)
 
 url = "http://localhost:5000/recomendar_grupos"
-response = requests.post(url, json=JSON)
+response = requests.post(url, json=JSON, timeout=60)
 data = response.json()
 print(
     f"""--------------------------
