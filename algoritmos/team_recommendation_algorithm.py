@@ -1,5 +1,5 @@
 from itertools import combinations
-from data_handling import ejercicios_df as E
+from .data_handling import ejercicios_df as E
 
 
 # Función para calcular el número máximo de medallas de una abilidad dada en todos los usuarios
@@ -12,18 +12,20 @@ def get_top_users_for_crit(users_df, criteria_required, top_n):
     top_users = {c: [] for c in criteria_required}
 
     for c in criteria_required:
-        skill = ability(c)
+        skill = ability_from(c)
         # calcular el score de criterios-medallas y ordenar los usuarios
-        users_df[c] = 0.6 * users_df["criteria"].apply(lambda x: x.get(c, 0)) / 100
+        users_df[c] = (
+            0.6 * users_df["criteria"].apply(lambda x, crit=c: x.get(crit, 0)) / 100
+        )
         users_df[c] += (
             0.2
-            * users_df["ability_medals"].apply(lambda x: x.count(skill))
+            * users_df["ability_medals"].apply(
+                lambda x, skill=ability_from(c): x.count(skill)
+            )
             / max_medals(skill, users_df)
         )
-        # print(users_df[skill])
         top_users_for_crit = users_df.sort_values(by=c, ascending=False).head(top_n)
         top_users[c] = top_users_for_crit["user_id"].tolist()
-    # print(top_users)
 
     # Recolectar usuarios a lo largo de los criterios
     blend_top_users = sum(top_users.values(), [])
@@ -34,15 +36,14 @@ def get_top_users_for_crit(users_df, criteria_required, top_n):
 
     # Ordenar por promedio de mayor a menor y seleccionar los top_n usuarios
     top_list = users_df_top.sort_values(by="average_score", ascending=False)
-    # print( top_list['user_id'].to_list(), len(top_list['user_id'].to_list()))
+
     return top_list["user_id"].to_list()
 
 
-def ability(criterion):
+def ability_from(criterion):
     # Filtrando los datos por el código de criterio dado
     filtered_data = E[E["criterion_code"] == int(criterion)]
     ability = filtered_data["ability_code"].unique()[0]
-    # print(ability)
     return ability
 
 
@@ -68,7 +69,6 @@ def get_best_teams_for_challenge(
     # Identificar las habilidades requeridas para el desafío
     challenge_row = challenges_df[challenges_df["#"] == challenge_number]
     criteria_required = [n for n in challenge_row["I"].values[0] if n]
-    # print('criteria required:',criteria_required)
 
     # Obtener los mejores usuarios para cada criterio requerido
     top_users_for_crit = get_top_users_for_crit(users_df, criteria_required, top_n)
@@ -85,7 +85,6 @@ def get_best_teams_for_challenge(
     if include:
         all_possible_teams = [include + team for team in all_possible_teams]
 
-    # print(all_possible_teams)
     # Eliminar combinaciones que ya están en el historial 'history'
     if history:
         #   history with sets (to take account of permutations)
