@@ -22,6 +22,6 @@ def calcular_ejercicios_disponibles(criterio, nivel, ejercicios_agotados):
             ~ejercicios_df["code"].isin(ejercicios_agotados)
         )  # excluyendo los ejercicios agotados
     ]
-    # Si hay al menos un ejercicio disponible, retornar True
+    # Si hay al menos un ejercicio disponible retornar True
 
     return not ejercicios_disponibles.empty
